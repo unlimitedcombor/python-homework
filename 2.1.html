@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>希冀Python实验一</title>
+    <title>希冀Python实验二第一部分</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -14,44 +14,56 @@
         }
 
         .code-block {
-    background-color: #1f2937; /* Dark gray for code blocks */
-    color: #d1d5db; /* Light gray text for code */
-    border-radius: 0.5rem; /* Rounded corners */
-    padding: 1rem;
-    overflow-x: auto; /* Horizontal scroll for long code lines */
-    font-family: 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", monospace;
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.5;
-}
+            background-color: #1f2937; /* Dark gray for code blocks */
+            color: #d1d5db; /* Light gray text for code */
+            border-radius: 0.5rem; /* Rounded corners */
+            padding: 1rem;
+            overflow-x: auto; /* Horizontal scroll for long code lines */
+            font-family: 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", monospace;
+            font-size: 0.875rem; /* 14px */
+            line-height: 1.5;
+        }
 
-.code-block pre,
-.code-block code {
-    margin: 0; /* Reset margin for pre if it was there */
-}    
+        .code-block pre,
+        .code-block code {
+            margin: 0; /* Reset margin for pre if it was there */
+            white-space: pre-wrap; /* Ensure code wraps and respects newlines */
+            word-break: break-all; /* Break long words if necessary */
+        }
 
-       .card {
+        .card {
             background-color: white;
             border-radius: 0.75rem; /* More rounded corners for cards */
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             transition: transform 0.2s ease-in-out;
         }
 
-       .card:hover {
+        .card:hover {
             transform: translateY(-5px);
         }
 
-       .contact-icon {
+        .contact-icon {
             width: 24px;
             height: 24px;
             margin-right: 8px;
         }
 
-        /* 新增样式，修改卡片容器布局 */
-        div[class*="grid md:grid-cols-2 lg:grid-cols-3 gap-8"] {
+        /* Original style for grid, overridden by user's specific style below */
+        /* div[class*="grid md:grid-cols-2 lg:grid-cols-3 gap-8"] { */
+        /* display: grid; */
+        /* } */
+
+        /* User's style to make cards appear in a single column */
+        div.grid.gap-8 { /* Targeting the specific class combination for answers */
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1rem; /* User specified gap */
         }
+        /* Responsive adjustments for the grid if needed, though flex column overrides it */
+        @media (min-width: 768px) { /* md breakpoint */
+            /* div.grid.gap-8 { flex-direction: row; flex-wrap: wrap; } */ /* Example if we wanted grid-like on md */
+        }
+
     </style>
 </head>
 
@@ -59,171 +71,150 @@
 
     <header class="bg-gradient-to-r from-sky-500 to-indigo-600 text-white py-12 shadow-lg">
         <div class="container mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Python作业-实验一</h1>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Python作业-实验二第一部分</h1>
             <p class="text-lg md:text-xl opacity-90">本网页旨在帮助同学们学习python</p>
         </div>
     </header>
 
     <main class="container mx-auto px-6 py-12">
-        
-
         <section id="answers">
             <h2 class="text-3xl font-semibold text-gray-700 mb-10 text-center">参考答案</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid gap-8">
 
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 1.1: BMI 计算器</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.1: 判断点是否在第二或第四象限</h3>
                     <div class="code-block">
                         <pre><code class="language-python">
-def calculate_bmi():
-    """
-    从标准输入读取体重（kg）和身高（m），计算并打印 BMI 值，保留两位小数。
-    """
-    # 1. 读取输入
-    try:
-        weight_str, height_str = input("请输入体重(kg)和身高(m)，用空格隔开: ").split()
-        weight = float(weight_str)
-        height = float(height_str)
-    except ValueError:
-        print("输入格式错误，请输入有效的数字。")
-        return
-    except Exception as e:
-        print(f"发生错误: {e}")
-        return
-
-    # 2. 校验输入
-    if height <= 0:
-        print("身高必须大于0。")
-        return
-    if weight <= 0:
-        print("体重必须大于0。")
-        return
-
-    # 3. 计算 BMI
-    bmi = weight / (height ** 2)
-
-    # 4. 输出结果，保留两位小数
-    print(f"您的BMI值为: {bmi:.2f}")
-
-if __name__ == "__main__":
-    calculate_bmi()
+#2.1
+x, y = map(float, input().split(','))
+print((x < 0 and y > 0) or (x > 0 and y < 0))
 </code></pre>
                     </div>
                 </div>
 
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 1.2: 生成0-1000的随机整数</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.2: 华氏度转摄氏度</h3>
                     <div class="code-block">
                         <pre><code class="language-python">
-import random
-
-# 生成一个0到1000之间的随机整数（包含0和1000）
-random_number = random.randint(0, 1000)
-print(f"生成的随机数是: {random_number}")
+#2.2
+F = float(input())
+C = 5/9 * (F - 32)
+print(f"{C:.2f}")
 </code></pre>
                     </div>
                 </div>
 
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 1.3: 计算直角三角形斜边</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.3: 三数之和与差</h3>
                     <div class="code-block">
                         <pre><code class="language-python">
-def calculate_hypotenuse():
-    try:
-        a_str, b_str = input("请输入两个直角边的长度，用空格隔开: ").split()
-        a = float(a_str)
-        b = float(b_str)
-    except ValueError:
-        print("输入格式错误，请输入有效的数字。")
-        return
-    except Exception as e:
-        print(f"发生错误: {e}")
-        return
-
-    if a <= 0 or b <= 0:
-        print("边长必须大于0。")
-        return
-
-    c = (a**2 + b**2)**0.5
-    print(f"直角边a: {a:.1f}, 直角边b: {b:.1f}, 斜边c: {c:.1f}")
-
-if __name__ == "__main__":
-    calculate_hypotenuse()
+#2.3
+a, b, c = map(int, input().split())
+sum_val = a + b + c
+sub_val = a - b - c
+print(f"x1=a+b+c={a}+{b}+{c}={sum_val}")
+print(f"x2=a-b-c={a}-{b}-{c}={sub_val}")
 </code></pre>
                     </div>
                 </div>
 
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 1.4: 三数平方根之和</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.4: 两数乘积、商和余数</h3>
                     <div class="code-block">
                         <pre><code class="language-python">
-import math
-
-def sum_of_square_roots():
-    try:
-        a_str, b_str, c_str = input("请输入三个浮点数，用空格隔开: ").split()
-        a = float(a_str)
-        b = float(b_str)
-        c = float(c_str)
-    except ValueError:
-        print("输入格式错误，请输入有效的数字。")
-        return
-    except Exception as e:
-        print(f"发生错误: {e}")
-        return
-
-    if a < 0 or b < 0 or c < 0:
-        print("输入数字不能为负，无法计算负数的平方根。")
-        return
-
-    s = math.sqrt(a) + math.sqrt(b) + math.sqrt(c)
-    print(f"三个数的平方根之和为: {s:.2f}")
-
-if __name__ == "__main__":
-    sum_of_square_roots()
+#2.4
+a, b = map(int, input().split())
+product = a * b
+quotient = a / b
+remainder = a % b
+print(f"{product} {quotient:.1f} {remainder}")
 </code></pre>
                     </div>
                 </div>
 
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 1.5: 圆的面积与周长</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.5: 提取三位数的各位数字</h3>
                     <div class="code-block">
                         <pre><code class="language-python">
-import math
-
-def circle_properties():
-    try:
-        r_str = input("请输入圆的半径: ")
-        r = float(r_str)
-    except ValueError:
-        print("输入格式错误，请输入有效的数字。")
-        return
-    except Exception as e:
-        print(f"发生错误: {e}")
-        return
-
-    if r <= 0:
-        print("半径必须大于0。")
-        return
-
-    area = math.pi * r * r
-    circumference = 2 * math.pi * r
-    print(f"圆的面积: {area:.2f}")
-    print(f"圆的周长: {circumference:.2f}")
-
-if __name__ == "__main__":
-    circle_properties()
+#2.5
+num = int(input())
+a = num % 10
+b = num // 10 % 10
+c = num // 100
+print(f"{a} {b} {c}")
 </code></pre>
                     </div>
                 </div>
 
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 1.6: 打印祝福语</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.6: 复合赋值运算</h3>
                     <div class="code-block">
                         <pre><code class="language-python">
-# 打印指定的祝福语
-print("What a beautiful campus!")
-print("I wish you every success!")
+#2.6
+a = 2
+a += a
+a *= 2 + 3
+a //= a + a
+print(f"{a:.2f}")
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.7: 格式化输出整数和浮点数</h3>
+                    <div class="code-block">
+                        <pre><code class="language-python">
+#2.7
+# 读取输入
+int_values = input().split()
+float_values = input().split()
+
+# 转换为相应的数据类型
+a, b, c = map(int, int_values)
+x, y, z = map(float, float_values)
+
+# 格式化输出
+# 整数部分：a=3   b=4   c=5
+print(f"a={a:<7}b={b:<7}c={c:<7}")
+
+# 浮点数部分：x=1.414  y=1.732  z=2.712
+print(f"x={x:<7.3f}y={y:<7.3f}z={z:<7.3f}")
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.8: 算术表达式求值</h3>
+                    <div class="code-block">
+                        <pre><code class="language-python">
+#2.8
+result = 3.5 + (8/2 * (3.5 + 6.7) / 2) % 4
+print(f"{result:.2f}")
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.9: 计算圆的面积与周长</h3>
+                    <div class="code-block">
+                        <pre><code class="language-python">
+#2.9
+r = float(input())
+pi = 3.14159
+area = pi * r * r
+circumference = 2 * pi * r
+print(f"{area:.2f} {circumference:.2f}")
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2.10: 整数转八进制和十六进制</h3>
+                    <div class="code-block">
+                        <pre><code class="language-python">
+#2.10
+x = int(input())
+print(oct(x), hex(x))
 </code></pre>
                     </div>
                 </div>
@@ -231,10 +222,9 @@ print("I wish you every success!")
         </section>
     </main>
 
-    <!-- 页码栏导航 -->
     <nav class="flex justify-center flex-wrap gap-2 mb-12">
-      <a href="index.html" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">实验一</a>
-      <a href="2.1.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验二第一部分</a>
+      <a href="index.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验一</a>
+      <a href="2.1.html" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">实验二第一部分</a>
       <a href="2.2.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验二第二部分</a>
       <a href="3.1.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验三第一部分</a>
       <a href="3.2.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验三第二部分</a>
@@ -246,7 +236,7 @@ print("I wish you every success!")
       <a href="11.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十一</a>
       <a href="12.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十二</a>
     </nav>
-  
+    
 
     <footer class="bg-gray-800 text-gray-300 py-12 mt-16">
         <div class="container mx-auto px-6 text-center">
@@ -261,7 +251,7 @@ print("I wish you every success!")
                 </div>
             </div>
                 <div class="flex justify-center mb-4">
-                    <img src="./image/6c46b2656ba0cc0dc582f3eca1beb56.png" style="height: 400px;width: 300px;">
+                    <img src="./image/6c46b2656ba0cc0dc582f3eca1beb56.png" alt="[二维码图片]" style="height: 400px;width: 300px;" onerror="this.alt='[二维码图片加载失败]'; this.src='https://placehold.co/300x400/cccccc/ffffff?text=Image+Not+Found';">
                 </div>
                 <p class="text-sm text-gray-500">&copy; 2025 Python实验代做</p> 
                 <p class="text-xs text-gray-600 mt-2">本站提供的代码仅供学习和参考，请勿直接复制。</p> </div>
@@ -274,4 +264,3 @@ print("I wish you every success!")
     
     </body>
     </html>
-    
