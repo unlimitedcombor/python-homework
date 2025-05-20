@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python作业-实验四</title>
+  <title>Python作业-实验十</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -53,7 +53,7 @@
 <body class="text-gray-800">
   <header class="bg-gradient-to-r from-sky-500 to-indigo-600 text-white py-12 shadow-lg">
     <div class="container mx-auto px-6 text-center">
-      <h1 class="text-4xl font-bold">Python作业-实验四</h1>
+      <h1 class="text-4xl font-bold">Python作业-实验十</h1>
       <p class="text-lg mt-2 opacity-90">本网页旨在帮助同学们学习Python</p>
     </div>
   </header>
@@ -64,53 +64,116 @@
         <div class="grid gap-8">
 
             <div class="card p-6">
-                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 1: 计算自然常数e的近似值</h3>
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 10.1: 创建数据库和表并插入数据</h3>
                 <div class="code-block">
                     <pre><code class="language-python">
-#1
-e = 1
-term = 1
-n = 1
-error = 0.00001
+#10-1
+import sqlite3
+li = [
+    (1, '张三', '男', '1998/06/27', '2023/12/12'),
+    (2, '李四', '女', '1998/07/15', '2023/12/12'),
+    (3, '王五', '男', '1998/08/20', '2023/12/12'),
+    (4, '赵六', '女', '1998/09/03', '2023/12/12'),
+    (5, '田七', '男', '1998/10/21', '2023/12/12')
+]
+con = sqlite3.connect('company.db')
+c = con.cursor()
+c.execute('''CREATE TABLE IF NOT EXISTS employee
+             (id INTEGER PRIMARY KEY,
+              name TEXT,
+              sex TEXT,
+              birthday TEXT,
+              hiredate TEXT)''')
+c.executemany('INSERT INTO employee VALUES (?, ?, ?, ?, ?)', li)
 
-while True:
-    term *= 1 / n
-    if term < error:
-        break
-    e += term
-    n += 1
-
-print(e)
+con.commit()
+c.close()
+con.close()
 </code></pre>
                 </div>
             </div>
 
             <div class="card p-6">
-                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2: 找出1000以内的所有完数</h3>
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 10.2: 查询并打印员工数据</h3>
                 <div class="code-block">
                     <pre><code class="language-python">
-#2
-for i in range(2, 1000):
-    sum_factors = 0
-    for j in range(1, i // 2 + 1):
-        if i % j == 0:
-            sum_factors += j
-    if sum_factors == i:
-        print(i)
+#10-2
+import sqlite3
+
+def print_employee_data(database_path):
+    try:
+        conn = sqlite3.connect(database_path)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM employee")
+        employee_data = cursor.fetchall()
+
+        for employee in employee_data:
+            employee_id, name, gender, birth_date, hire_date = employee
+            print(f"{employee_id} {name} {gender} {birth_date} {hire_date}")
+
+        conn.close()
+    except sqlite3.Error as e:
+        print("SQLite Error:", e)
+
+database_path = input()
+
+print_employee_data(database_path)
 </code></pre>
                 </div>
             </div>
 
             <div class="card p-6">
-                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 3: 打印星号金字塔</h3>
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 10.3: 更新员工数据</h3>
                 <div class="code-block">
                     <pre><code class="language-python">
-#3
-n = int(input())
-i = 1
-while i <= n:
-    print('*' * i)
-    i += 1
+#10-3
+import sqlite3
+
+db_file = "company.db"
+
+conn = sqlite3.connect(db_file)
+c = conn.cursor()
+
+
+c.execute("UPDATE employee SET hiredate='2019/01/01'")
+
+
+c.execute("SELECT * FROM employee")
+rows = c.fetchall()
+
+for row in rows:
+    print("{} {} {} {} {}".format(row[0], row[1], row[2], row[3], row[4]))
+
+conn.commit()
+conn.close()
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 10.4: 删除员工数据</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#10-4
+import sqlite3
+
+db_file = "company.db"
+
+conn = sqlite3.connect(db_file)
+c = conn.cursor()
+
+
+c.execute("DELETE FROM employee WHERE id=2")
+
+c.execute("SELECT * FROM employee")
+rows = c.fetchall()
+
+for row in rows:
+    print("{} {} {} {} {}".format(row[0], row[1], row[2], row[3], row[4]))
+
+conn.commit()
+conn.close()
 </code></pre>
                 </div>
             </div>
@@ -125,13 +188,13 @@ while i <= n:
       <a href="2.2.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验二第二部分</a>
       <a href="3.1.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验三第一部分</a>
       <a href="3.2.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验三第二部分</a>
-      <a href="4.html" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">实验四</a>
+      <a href="4.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验四</a>
       <a href="5.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验五</a>
       <a href="6.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验六</a>
       <a href="7.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验七</a>
       <a href="8.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验八</a>
       <a href="9.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验九</a>
-      <a href="10.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十</a>
+      <a href="10.html" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">实验十</a>
       <a href="11.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十一</a>
       <a href="12.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十二</a>
     </nav>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python作业-实验八</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f4f6;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .code-block {
+      background-color: #1f2937; /* 代码块深灰色背景 */
+      color: #d1d5db; /* 代码块浅灰色文字 */
+      border-radius: 0.5rem; /* 圆角 */
+      padding: 1rem;
+      overflow-x: auto; /* 代码过长时横向滚动 */
+      font-family: 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", monospace;
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.5;
+    }
+
+    .code-block pre,
+    .code-block code {
+      margin: 0; /* 重置 pre 标签的外边距 */
+      white-space: pre-wrap; /* 保持代码换行和空格 */
+      word-break: break-all; /* 长单词换行 */
+    }
+    
+    /* 用户自定义样式，使卡片单列显示 */
+    main div.grid.gap-8 { /* 目标为答案区域的特定类组合 */
+      display: flex;
+      flex-direction: column;
+      gap: 1rem; /* 用户指定的间距 */
+    }
+  </style>
+</head>
+
+<body class="text-gray-800">
+  <header class="bg-gradient-to-r from-sky-500 to-indigo-600 text-white py-12 shadow-lg">
+    <div class="container mx-auto px-6 text-center">
+      <h1 class="text-4xl font-bold">Python作业-实验八</h1>
+      <p class="text-lg mt-2 opacity-90">本网页旨在帮助同学们学习Python</p>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-12">
+    <section id="answers">
+        <h2 class="text-3xl font-semibold text-gray-700 mb-10 text-center">参考答案</h2>
+        <div class="grid gap-8">
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 8.1: 四则运算计算器</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#8-1
+import tkinter as tk
+
+# 创建窗口
+window = tk.Tk()
+window.title("四则运算计算器")
+
+
+# 设置字体
+font_style = ("Arial", 14)
+
+# 添加显示结果的文本框
+result_entry = tk.Entry(window, font=font_style)
+result_entry.grid(row=0, column=0, columnspan=4)
+
+# 定义按钮的点击事件
+
+
+def button_click(number):
+
+    current = result_entry.get()
+
+    if number == 'C':
+        result_entry.delete(0, tk.END)
+    elif number == '=':
+        result = eval(current)
+        result_entry.insert(len(current), str(number))
+        current = result_entry.get()
+        result_entry.insert(len(current), str(result))
+    else:
+        result_entry.insert(len(current), str(number))
+
+
+# 添加数字按钮
+buttons = [
+    ("7", 1, 0), ("8", 1, 1), ("9", 1, 2), ("/", 1, 3),
+    ("4", 2, 0), ("5", 2, 1), ("6", 2, 2), ("*", 2, 3),
+    ("1", 3, 0), ("2", 3, 1), ("3", 3, 2), ("-", 3, 3),
+    ("0", 4, 0), (".", 4, 1), ("C", 4, 2), ("+", 4, 3),
+    ("=", 5, 1)
+]
+
+for button_text, row, col in buttons:
+    if button_text == "=":
+        btn = tk.Button(window, text=button_text, font=font_style, padx=20,
+                        pady=20, command=lambda num=button_text: button_click(num))
+        btn.grid(row=row, column=col, columnspan=2)
+    else:
+        btn = tk.Button(window, text=button_text, font=font_style, padx=20,
+                        pady=20, command=lambda num=button_text: button_click(num))
+        btn.grid(row=row, column=col)
+
+# 运行窗口主循环
+window.mainloop()
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 8.2: GIF文件预览器</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#8-2
+import os
+import tkinter as tk
+from tkinter import filedialog
+from PIL import Image, ImageTk
+ 
+class GifViewerApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("GIF文件预览器")
+ 
+        self.folder_path = tk.StringVar()
+        self.image_path = tk.StringVar()
+ 
+        #文件夹选择按钮
+        select_folder_button = tk.Button(root, text = "选择文件夹", command = self.select_folder)
+        select_folder_button.pack(pady = 10)
+ 
+        #文件夹路径显示
+        folder_label = tk.Label(root, textvariable = self.folder_path)
+        folder_label.pack()
+ 
+        self.file_listbox = tk.Listbox(root, selectmode = tk.SINGLE, height = 10)
+        self.file_listbox.pack()
+ 
+        preview_label = tk.Label(root, text = "文件预览")
+        preview_label.pack()
+ 
+        self.preview_canvas = tk.Canvas(root, width = 300, height = 300)
+        self.preview_canvas.pack()
+ 
+        self.file_listbox.bind("<<ListboxSelect>>", self.show_preview)
+ 
+ 
+    def select_folder(self):
+        folder_path = filedialog.askdirectory(title = "选择文件夹")
+        if folder_path:
+            self.folder_path.set(folder_path)
+            self.load_files_in_folder(folder_path)
+ 
+ 
+    def load_files_in_folder(self, folder_path):
+        self.file_listbox.delete(0, tk.END)
+        files = [f for f in os.listdir(folder_path) if f.lower().endswith(".gif")]
+ 
+        for file in files:
+            self.file_listbox.insert(tk.END, file)
+    def show_preview(self, event):
+        selected_index = self.file_listbox.curselection()
+        if selected_index:
+            selected_file = self.file_listbox.get(selected_index)
+            file_path = os.path.join(self.folder_path.get(), selected_file)
+            self.display_image(file_path)
+ 
+ 
+    def display_image(self, image_path):
+        img = Image.open(image_path)
+        img.thumbnail((300, 300))
+        img = ImageTk.PhotoImage(img)
+ 
+        self.preview_canvas.config(width = img.width(), height = img.height())
+        self.preview_canvas.create_image(0, 0, anchor = tk.NW, image = img)
+        self.image_path = img # Note: For image to reliably display, 'img' (PhotoImage) should be stored as an instance variable, e.g., self.img_tk = img
+ 
+ 
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = GifViewerApp(root)
+    root.mainloop()
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 8.3: 随机数生成器</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#8-3
+import random
+import tkinter as tk
+ 
+ 
+# 创建主窗口
+root = tk.Tk()
+root.title("随机数生成器")
+ 
+# 设置窗口大小和位置
+root.geometry("300x200+500+300")
+ 
+# 设置标签文本和字体
+label = tk.Label(root, text="", font=("Arial", 16))
+label.pack()
+ 
+# 定义显示随机数的函数
+ 
+ 
+def show_random_number():
+    # 生成1到100之间的随机数
+    random_number = random.randint(1, 100)
+    # 更新标签文本
+    label.config(text='随机数：'+str(random_number))
+ 
+ 
+# 创建按钮，点击时调用show_random_number函数
+button = tk.Button(root, text="显示随机数", command=show_random_number)
+button.pack()
+ 
+# 运行主循环
+root.mainloop()
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 8.4: 判偶数程序</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#8-4
+from tkinter import messagebox
+import tkinter as tk
+ 
+# 创建主窗口
+root = tk.Tk()
+root.title("判偶数")
+ 
+# 设置窗口大小和位置
+root.geometry("300x200+500+300")
+ 
+# 创建输入框
+entry = tk.Entry(root)
+entry.pack()
+ 
+# 定义判偶数的函数
+ 
+ 
+def check_even_odd():
+    try:
+        # 获取输入的数
+        number = int(entry.get())
+        # 判断奇偶
+        if number % 2 == 0:
+            result = f"{number}是偶数"
+        else:
+            result = f"{number}不是偶数"
+        # 弹出消息框显示结果
+        messagebox.showinfo(message = result)
+    except ValueError:
+        # 如果输入不是整数，则弹出错误消息框
+        messagebox.showerror("错误", "请输入一个有效的整数", font=("Arial", 14)) # Note: 'font' is not a standard parameter for messagebox.showerror
+ 
+ 
+# 创建按钮，点击时调用check_even_odd函数
+button = tk.Button(root, text="判偶数", command=check_even_odd)
+button.pack()
+ 
+# 运行主循环
+root.mainloop()
+</code></pre>
+                </div>
+            </div>
+
+        </div>
+    </section>
+  </main>
+
+  <nav class="flex justify-center flex-wrap gap-2 mb-12">
+      <a href="index.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验一</a>
+      <a href="2.1.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验二第一部分</a>
+      <a href="2.2.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验二第二部分</a>
+      <a href="3.1.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验三第一部分</a>
+      <a href="3.2.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验三第二部分</a>
+      <a href="4.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验四</a>
+      <a href="5.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验五</a>
+      <a href="6.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验六</a>
+      <a href="7.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验七</a>
+      <a href="8.html" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">实验八</a>
+      <a href="9.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验九</a>
+      <a href="10.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十</a>
+      <a href="11.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十一</a>
+      <a href="12.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十二</a>
+    </nav>
+  
+  
+
+  <footer class="bg-gray-800 text-gray-300 py-12">
+    <div class="container mx-auto px-6 text-center">
+      <h3 class="text-2xl font-semibold mb-6">需要更多帮助？联系我们！</h3>
+      <p class="mb-2 text-gray-400">微信: xzzd0000（学在郑大）</p>
+      <div class="flex justify-center mb-4">
+        <img src="./image/6c46b2656ba0cc0dc582f3eca1beb56.png" style="height: 400px; width: 300px;" />
+      </div>
+      <p class="text-sm text-gray-500">&copy; 2025 Python实验代做</p>
+    </div>
+  </footer>
+</body>
+</html>

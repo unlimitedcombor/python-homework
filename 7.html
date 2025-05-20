@@ -22,6 +22,31 @@
     .card:hover {
       transform: translateY(-5px);
     }
+
+    .code-block {
+      background-color: #1f2937; /* 代码块深灰色背景 */
+      color: #d1d5db; /* 代码块浅灰色文字 */
+      border-radius: 0.5rem; /* 圆角 */
+      padding: 1rem;
+      overflow-x: auto; /* 代码过长时横向滚动 */
+      font-family: 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", monospace;
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.5;
+    }
+
+    .code-block pre,
+    .code-block code {
+      margin: 0; /* 重置 pre 标签的外边距 */
+      white-space: pre-wrap; /* 保持代码换行和空格 */
+      word-break: break-all; /* 长单词换行 */
+    }
+    
+    /* 用户自定义样式，使卡片单列显示 */
+    main div.grid.gap-8 { /* 目标为答案区域的特定类组合 */
+      display: flex;
+      flex-direction: column;
+      gap: 1rem; /* 用户指定的间距 */
+    }
   </style>
 </head>
 
@@ -29,18 +54,170 @@
   <header class="bg-gradient-to-r from-sky-500 to-indigo-600 text-white py-12 shadow-lg">
     <div class="container mx-auto px-6 text-center">
       <h1 class="text-4xl font-bold">Python作业-实验七</h1>
-      <p class="text-lg mt-2 opacity-90">页面内容敬请期待...</p>
+      <p class="text-lg mt-2 opacity-90">本网页旨在帮助同学们学习Python</p>
     </div>
   </header>
 
-  <main class="container mx-auto px-6 py-16 flex justify-center items-center">
-    <div class="card p-8 text-center max-w-xl">
-      <h2 class="text-2xl font-semibold text-indigo-600 mb-4">敬请期待</h2>
-      <p class="text-gray-600">本实验内容尚未上线，敬请期待后续更新。</p>
-    </div>
+  <main class="container mx-auto px-6 py-12">
+    <section id="answers">
+        <h2 class="text-3xl font-semibold text-gray-700 mb-10 text-center">参考答案</h2>
+        <div class="grid gap-8">
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 1: 计算能喝到的汽水总数</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#1
+def calculate_bottles(money):
+    total = money  # 初始用钱买的水
+    empty_bottles = total  # 初始空瓶数
+    caps = total     # 初始瓶盖数
+    
+    # 只要有空瓶或瓶盖可以兑换就继续
+    while empty_bottles >= 2 or caps >= 3:
+        # 用空瓶兑换水
+        exchanged_from_bottles = empty_bottles // 2
+        total += exchanged_from_bottles
+        empty_bottles = empty_bottles % 2 + exchanged_from_bottles
+        caps += exchanged_from_bottles
+        
+        # 用瓶盖兑换水
+        exchanged_from_caps = caps // 3
+        total += exchanged_from_caps
+        caps = caps % 3 + exchanged_from_caps
+        empty_bottles += exchanged_from_caps
+    
+    return total
+
+# 输入金额
+money = int(input())
+print(calculate_bottles(money))
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2: 计算三个整数的最大公约数</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#2
+import math
+
+def gcd_three_numbers(a, b, c):
+    try:
+        # 计算a, b和c的最大公约数
+        return math.gcd(math.gcd(a, b), c)
+    except Exception:
+        # 如果发生任何异常，返回“发生异常”
+        return "发生异常"
+
+# 输入三个整数
+try:
+    num1 = int(input())
+    num2 = int(input())
+    num3 = int(input())
+    
+    # 计算并输出最大公约数
+    print(gcd_three_numbers(num1, num2, num3))
+except ValueError:
+    # 如果输入的不是有效整数，输出异常信息
+    print("发生异常")
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 3: 计算阶乘和</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#3
+import math
+
+def factorial_sum(n):
+    # 计算1! + 2! + ... + n!
+    total = 0
+    for i in range(1, n+1):
+        total += math.factorial(i)
+    return total
+
+# 输入最大的数字n
+try:
+    n = int(input())
+    
+    # 输出阶乘和
+    print(factorial_sum(n))
+except ValueError:
+    print("发生异常")
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 4: 输出指定范围内的闰年</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#4
+def is_leap_year(year):
+    if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
+        return True
+    return False
+
+def print_leap_years(start, end):
+    leap_years = []
+    for year in range(start, end + 1):
+        if is_leap_year(year):
+            leap_years.append(str(year))
+    print(" ".join(leap_years))
+
+print_leap_years(1980, 2050)
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 5: 计算某月的天数</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#5
+import calendar
+
+def days_in_month(y, m):
+    return calendar.monthrange(y, m)[1]
+
+# 输入年份和月份
+y = int(input())
+m = int(input())
+
+# 输出该月的天数
+print(days_in_month(y, m))
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 6: 将一行单词首字母大写</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#6
+def capitalize_words(word_list_str):
+    try:
+        return " ".join([word.capitalize() for word in word_list_str.split()])
+    except Exception:
+        return "发生异常"
+
+# 输入一行单词
+input_str = input()
+
+# 输出转换后的单词
+print(capitalize_words(input_str))
+</code></pre>
+                </div>
+            </div>
+
+        </div>
+    </section>
   </main>
 
-  <!-- 页码栏导航 -->
   <nav class="flex justify-center flex-wrap gap-2 mb-12">
       <a href="index.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验一</a>
       <a href="2.1.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验二第一部分</a>
@@ -51,7 +228,9 @@
       <a href="5.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验五</a>
       <a href="6.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验六</a>
       <a href="7.html" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">实验七</a>
+      <a href="8.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验八</a>
       <a href="9.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验九</a>
+      <a href="10.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十</a>
       <a href="11.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十一</a>
       <a href="12.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十二</a>
     </nav>

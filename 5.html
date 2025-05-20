@@ -22,6 +22,31 @@
     .card:hover {
       transform: translateY(-5px);
     }
+
+    .code-block {
+      background-color: #1f2937; /* 代码块深灰色背景 */
+      color: #d1d5db; /* 代码块浅灰色文字 */
+      border-radius: 0.5rem; /* 圆角 */
+      padding: 1rem;
+      overflow-x: auto; /* 代码过长时横向滚动 */
+      font-family: 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", monospace;
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.5;
+    }
+
+    .code-block pre,
+    .code-block code {
+      margin: 0; /* 重置 pre 标签的外边距 */
+      white-space: pre-wrap; /* 保持代码换行和空格 */
+      word-break: break-all; /* 长单词换行 */
+    }
+    
+    /* 用户自定义样式，使卡片单列显示 */
+    main div.grid.gap-8 { /* 目标为答案区域的特定类组合 */
+      display: flex;
+      flex-direction: column;
+      gap: 1rem; /* 用户指定的间距 */
+    }
   </style>
 </head>
 
@@ -29,18 +54,344 @@
   <header class="bg-gradient-to-r from-sky-500 to-indigo-600 text-white py-12 shadow-lg">
     <div class="container mx-auto px-6 text-center">
       <h1 class="text-4xl font-bold">Python作业-实验五</h1>
-      <p class="text-lg mt-2 opacity-90">页面内容敬请期待...</p>
+      <p class="text-lg mt-2 opacity-90">本网页旨在帮助同学们学习Python</p>
     </div>
   </header>
 
-  <main class="container mx-auto px-6 py-16 flex justify-center items-center">
-    <div class="card p-8 text-center max-w-xl">
-      <h2 class="text-2xl font-semibold text-indigo-600 mb-4">敬请期待</h2>
-      <p class="text-gray-600">本实验内容尚未上线，敬请期待后续更新。</p>
-    </div>
+  <main class="container mx-auto px-6 py-12">
+    <section id="answers">
+        <h2 class="text-3xl font-semibold text-gray-700 mb-10 text-center">参考答案</h2>
+        <div class="grid gap-8">
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 5.1: 绘制三个并排三角形</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#5-1
+from PIL import Image  #5-1评测需要的配置，不要进行修改
+import turtle
+ 
+ 
+turtle.setup(350, 350)  # 设置窗口大小
+ 
+t = turtle.Turtle(visible=False)  # 创建Turtle对象，并设置画笔不显示，评测需要的配置，不要进行修改
+turtle.tracer(False)  # 不展示绘制过程，如果需要测试可以删除该语句，评测需要的配置，不要进行修改
+ 
+#接收一个值作为边长
+d = float(input())
+ 
+#设置画笔颜色和填充颜色，前者为画笔颜色，后者为填充颜色
+t.color('black','black')
+#绘制三个黑色的三角形，因此循环三次
+for i in range(3):
+	#准备开始填充
+    t.begin_fill()
+    #绘制单个三角形
+    for j in range(3):
+        
+        t.forward(d)
+        t.left(120)
+     
+        if j==2:
+            t.up()
+            t.right(60)
+            t.forward(d)
+            t.down()
+            t.left(180)
+    t.end_fill()
+ts = t.getscreen()  # 其中t为你创建的Turtle对象，评测需要的配置，不要进行修改
+ts.getcanvas().postscript(file="main.eps")  # 保存eps矢量图，评测需要的配置，不要进行修改
+turtle.bye()  # 关闭窗口，评测需要的配置，不要进行修改
+turtle.Turtle._screen = None  # 评测需要的配置，不要进行修改
+turtle.TurtleScreen._RUNNING = True  # 评测需要的配置，不要进行修改
+ 
+im = Image.open("main.eps")  # 评测需要的配置，不要进行修改
+im.save("main.jpg", "JPEG")  # 评测需要的配置，不要进行修改
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 5.2: 绘制六角星图案 (大卫之星)</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#5-2
+from PIL import Image  #5-2 评测需要的配置，不要进行修改
+import math
+import turtle
+turtle.setup(500,500)
+turtle.tracer(False)
+side_length = float(input())
+gap = 2
+t = turtle.Turtle(visible = False)
+ups = [(0, round(math.sqrt(3) * side_length) + gap),
+       (- ((side_length / 2) + gap/2), round(math.sqrt(3) / 2 * side_length)),
+       (-(side_length + gap), -(gap/2)),
+       (0, -(gap/2)),
+       (side_length + gap, -(gap/2)),
+       ((gap+side_length) / 2, round(math.sqrt(3) / 2 * side_length))
+       ]
+downs = [(0, gap / 2),
+         (- (side_length + gap), gap/2),
+         (- (side_length / 2), -(round(math.sqrt(3) / 2 * side_length) + gap)),
+         (0, -(round(math.sqrt(3) * side_length) + gap)),
+         ((side_length + gap) / 2, -(round(math.sqrt(3) / 2 * side_length) + gap)),
+         ((side_length + gap), (gap/2))
+         ]
+#side_length表示三角形边长，gap表示间隙，设置为2
+#ups表示正放三角形最上角点的坐标
+#downs表示反放三角形最下角点的坐标
+ 
+t.color('black','black')
+t.right(60)
+for i in range(6):
+    t.penup()
+    x = ups[i][0]
+    y = ups[i][1]
+    t.goto(x,y)
+ 
+    t.pendown()
+    t.begin_fill()
+    for i in range(3):
+        t.forward(side_length)
+        t.right(120)
+    t.end_fill()
+for i in range(6):
+    t.penup()
+    x = downs[i][0]
+    y = downs[i][1]
+    t.goto(x,y)
+ 
+    t.pendown()
+    t.begin_fill()
+    for i in range(3):
+        t.backward(side_length)
+        t.right(120)
+    t.end_fill()
+ts = t.getscreen()  # 其中t为你创建的Turtle对象，评测需要的配置，不要进行修改
+ts.getcanvas().postscript(file="main.eps")  # 保存eps矢量图，评测需要的配置，不要进行修改
+turtle.bye()  # 关闭窗口，评测需要的配置，不要进行修改
+turtle.Turtle._screen = None  # 评测需要的配置，不要进行修改
+turtle.TurtleScreen._RUNNING = True  # 评测需要的配置，不要进行修改
+ 
+im = Image.open("main.eps")  # 评测需要的配置，不要进行修改
+im.save("main.jpg", "JPEG")  # 评测需要的配置，不要进行修改
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 5.3: 绘制国际象棋棋盘</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#5-3
+from PIL import Image  #5-3 评测需要的配置，不要进行修改
+import turtle  # 导入turtle
+ 
+ 	
+# 设置窗口大小
+turtle.setup(1000, 1000)
+ 
+# 创建Turtle对象，并设置画笔不显示，评测需要的配置，不要进行修改
+t = turtle.Turtle(visible=False)
+# 不展示绘制过程，如果需要测试可以删除该语句，评测需要的配置，不要进行修改
+turtle.tracer(False)
+l = float(input())
+t.up()  # 起笔
+t.backward(4*l)  # 反向后向左移动4个边长，目的是绘制后整个棋盘水平方向上居中
+t.right(90) #右转90度，方向向下
+t.backward(4*l)  #反向后向上移动4个边长，目的是绘制后整个棋盘垂直方向上居中
+t.left(90) # 现在画笔应该是出于成型图片的左上角
+t.down() #落笔 该画线了
+for i in range(9):
+    t.fd(8*l)  #fd是forward的别称，画笔在当前方向移动一段距离，画了棋盘的一条横线（8个格子边长的长度）
+    t.up()  #起笔
+    t.right(90) #右转画笔方向向下
+    t.fd(l) # 向下移动 一个格子边长的距离，注意此时没有落笔，因此只移动不画线
+    t.left(90) #向左旋转，此时画笔朝右
+    t.backward(8*l)  #反向后向左移动一条棋盘的线（8个小格子的边长），没有画线哈。
+    t.down()  #此时才落笔，下个循环继续画线
+ 
+#到这以后九条线全画完了，但是画笔在第十条线的位置，方向向右，我们需要回到第九条线
+t.up()  #起笔
+t.left(90) # 左转90度，方向向上
+t.fd(l) #向上移动到第九条线的起点。
+t.down() #落笔
+# 这个循环主要画 纵向的九条线。此时画笔在横向第九条线的起点，方向向上，方向对了。
+for i in range(9):
+    t.fd(8*l) #跟上边同理哈，自己对比
+    t.up()
+    t.right(90)
+    t.fd(l)
+    t.left(90)
+    t.backward(8*l)
+    t.down()
+t.up()
+t.left(90)
+t.fd(l)
+t.down()
+#此时画笔在第九条纵线的起点，方向向左。
+#目前所有格子我们已经画好了，现在需要填充黑颜色。
+#双层循环 8*8绘制64个格子
+for r in range(8): 
+    for i in range(8):
+        if (i+r)%2==0:
+			#根据i+r的值是否为偶数来确定是否填充黑色。
+            t.begin_fill()
+        for j in range(4): #绘制小格子
+            t.fd(l)
+            t.right(90)
+        if (i+r)%2 ==0:
+            t.end_fill()
+        t.fd(l)
+	# 每一行的绘制完以后，执行下边的代码让画笔回到下一行的起点
+    t.backward(8*l)
+    t.right(90)
+    t.fd(l)
+    t.left(90)
+ 
+ts = t.getscreen()  # 其中t为你创建的Turtle对象，评测需要的配置，不要进行修改
+ts.getcanvas().postscript(file="main.eps")  # 保存eps矢量图，评测需要的配置，不要进行修改
+turtle.bye()  # 关闭窗口，评测需要的配置，不要进行修改
+turtle.Turtle._screen = None  # 评测需要的配置，不要进行修改
+turtle.TurtleScreen._RUNNING = True  # 评测需要的配置，不要进行修改
+ 
+im = Image.open("main.eps")  # 评测需要的配置，不要进行修改
+im.save("main.jpg", "JPEG")  # 评测需要的配置，不要进行修改
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 5.4: 绘制运动场跑道</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#5-4
+from PIL import Image  #5-4 评测需要的配置，不要进行修改
+import turtle
+ 
+turtle.setup(1000, 1000)  # 设置窗口大小
+ 
+t = turtle.Turtle(visible=False)  # 创建Turtle对象，并设置画笔不显示，评测需要的配置，不要进行修改
+turtle.tracer(False)  # 不展示绘制过程，如果需要测试可以删除该语句，评测需要的配置，不要进行修改
+scale = float(input())
+ 
+t.color('yellow', 'red')
+r = 48*scale   #操场两遍半圆的半径，同时也是
+l = 100*scale  #操场中直道的长度
+t.penup()  #起笔 以下操作主要是移动画笔 并不会画线
+t.forward(0.5*l) # 向右移动直道的一半长度，保证最后成图水平方向居中
+t.right(90) # 画笔右转90度，此时方向向下
+t.forward(r) #向下移动半圆的半径 确保成图垂直方向上居中
+t.left(90) #画笔左转
+t.pendown() #落笔，此时画笔在下边最外围直道跑道的最右边。
+ 
+#画五条跑道线，得四条跑道，先画最外围，然后一圈一圈往里画
+for i in range(5):
+	# 最后一圈最里圈填充颜色和画笔颜色都为绿色
+    if i == 4:
+        t.color('green', 'green')
+    t.begin_fill()
+	# 每一圈的起点都在这一圈下侧直道的重点，因此先画半圆 然后画直道，循环两次就是一整圈
+    for j in range(2):
+        t.circle(r, 180)
+        t.forward(l)
+    t.end_fill()
+ 
+	#起笔，移动画笔到下一圈的起点
+    t.penup()
+    t.left(90)
+    t.forward(2*scale)  #2*scale是每条跑道的宽度
+    t.right(90)
+    t.pendown()
+    r -= 2*scale  #修改下一圈操场半圆的半径
+ 
+ 
+ts = t.getscreen()  # 其中t为你创建的Turtle对象，评测需要的配置，不要进行修改
+ts.getcanvas().postscript(file="main.eps")  # 保存eps矢量图，评测需要的配置，不要进行修改
+turtle.bye()  # 关闭窗口，评测需要的配置，不要进行修改
+turtle.Turtle._screen = None  # 评测需要的配置，不要进行修改
+turtle.TurtleScreen._RUNNING = True  # 评测需要的配置，不要进行修改
+ 
+im = Image.open("main.eps")  # 评测需要的配置，不要进行修改
+im.save("main.jpg", "JPEG")  # 评测需要的配置，不要进行修改
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 5.5: 绘制月亮和星星</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#5-5
+from PIL import Image  #5-5 评测需要的配置，不要进行修改
+import turtle
+import random
+import math
+turtle.setup(1000, 1000)  # 设置窗口大小
+ 
+t = turtle.Turtle(visible=False)  # 创建Turtle对象，并设置画笔不显示，评测需要的配置，不要进行修改
+turtle.tracer(False)  # 不展示绘制过程，如果需要测试可以删除该语句，评测需要的配置，不要进行修改
+ 
+r, o = map(float,input().split())
+t.up()
+t.goto(200, 100)  #移动画笔到月亮的圆心坐标点
+t.down()
+t.dot(2*r)  #以当前位置为圆心，画一个半径为r的圆
+t.up()
+ 
+t.right(72)
+t.down()
+#设置随机数种子为1，这样后边取随机数的时候，每次出现的随机数的大小是可遇见的，详细可以自己百度。
+#当Python的随机数种子设置相同时，生成的随机数序列将会是完全相同的。这意味着无论多少次运行程序，使用相同的种子，都会得到完全相同的随机数序列。
+random.seed(1)
+ 
+#画20个五角星
+for i in range(20):
+    t.color('black','black')
+	# 确定每个五角星的起始坐标x,y
+    x = random.uniform(-500,500)#生成x坐标
+    y = random.uniform(-500,500)#生成y坐标
+ 
+ 
+ 
+    t.up()
+    t.goto(x,y)
+    
+    t.down()
+    t.begin_fill()
+	# 五条线绘制出五角星
+    for j in range(5):
+        t.forward(o)
+        t.right(144)
+    t.end_fill()
+    l = o/(2+2*math.cos(math.pi*0.4))#由于画出的是一个空心的五角星，需要对里面填充白色，这个属于数学上的计算问题，计算顶点到最近交点的距离，数学问题不做过多解释。
+    t.fd(l)
+    t.color('black', 'white')#设置填充颜色
+ 
+    t.begin_fill()
+    y_offset = 2*l*math.cos(math.pi*0.4)#移动画笔至内正五边形的顶点
+    for k_inner_loop in range(5):#画一个正五边形，填充颜色为白色 (variable k_inner_loop used to avoid shadowing)
+        t.fd(y_offset)
+        t.right(72)
+    t.end_fill()
+ 
+ts = t.getscreen()  # 其中t为你创建的Turtle对象，评测需要的配置，不要进行修改
+ts.getcanvas().postscript(file="main.eps")  # 保存eps矢量图，评测需要的配置，不要进行修改
+turtle.bye()  # 关闭窗口，评测需要的配置，不要进行修改
+turtle.Turtle._screen = None  # 评测需要的配置，不要进行修改
+turtle.TurtleScreen._RUNNING = True  # 评测需要的配置，不要进行修改
+ 
+im = Image.open("main.eps")  # 评测需要的配置，不要进行修改
+im.save("main.jpg", "JPEG")  # 评测需要的配置，不要进行修改
+</code></pre>
+                </div>
+            </div>
+
+        </div>
+    </section>
   </main>
 
-  <!-- 页码栏导航 -->
   <nav class="flex justify-center flex-wrap gap-2 mb-12">
       <a href="index.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验一</a>
       <a href="2.1.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验二第一部分</a>
@@ -51,7 +402,9 @@
       <a href="5.html" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">实验五</a>
       <a href="6.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验六</a>
       <a href="7.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验七</a>
+      <a href="8.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验八</a>
       <a href="9.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验九</a>
+      <a href="10.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十</a>
       <a href="11.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十一</a>
       <a href="12.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十二</a>
     </nav>

@@ -22,6 +22,31 @@
     .card:hover {
       transform: translateY(-5px);
     }
+
+    .code-block {
+      background-color: #1f2937; /* 代码块深灰色背景 */
+      color: #d1d5db; /* 代码块浅灰色文字 */
+      border-radius: 0.5rem; /* 圆角 */
+      padding: 1rem;
+      overflow-x: auto; /* 代码过长时横向滚动 */
+      font-family: 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", monospace;
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.5;
+    }
+
+    .code-block pre,
+    .code-block code {
+      margin: 0; /* 重置 pre 标签的外边距 */
+      white-space: pre-wrap; /* 保持代码换行和空格 */
+      word-break: break-all; /* 长单词换行 */
+    }
+    
+    /* 用户自定义样式，使卡片单列显示 */
+    main div.grid.gap-8 { /* 目标为答案区域的特定类组合 */
+      display: flex;
+      flex-direction: column;
+      gap: 1rem; /* 用户指定的间距 */
+    }
   </style>
 </head>
 
@@ -29,18 +54,139 @@
   <header class="bg-gradient-to-r from-sky-500 to-indigo-600 text-white py-12 shadow-lg">
     <div class="container mx-auto px-6 text-center">
       <h1 class="text-4xl font-bold">Python作业-实验六</h1>
-      <p class="text-lg mt-2 opacity-90">页面内容敬请期待...</p>
+      <p class="text-lg mt-2 opacity-90">本网页旨在帮助同学们学习Python</p>
     </div>
   </header>
 
-  <main class="container mx-auto px-6 py-16 flex justify-center items-center">
-    <div class="card p-8 text-center max-w-xl">
-      <h2 class="text-2xl font-semibold text-indigo-600 mb-4">敬请期待</h2>
-      <p class="text-gray-600">本实验内容尚未上线，敬请期待后续更新。</p>
-    </div>
+  <main class="container mx-auto px-6 py-12">
+    <section id="answers">
+        <h2 class="text-3xl font-semibold text-gray-700 mb-10 text-center">参考答案</h2>
+        <div class="grid gap-8">
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 1: 统计随机整数出现次数</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#1
+import random
+
+# 设置随机种子
+random.seed(1)
+
+# 生成1000个随机整数，范围在[20, 100]之间
+numbers = [random.randint(20, 100) for _ in range(1000)]
+
+# 统计每个数字出现的次数
+count_dict = {}
+for num in numbers:
+    if num in count_dict:
+        count_dict[num] += 1
+    else:
+        count_dict[num] = 1
+
+# 按升序排列并输出
+for num in sorted(count_dict.keys()):
+    print(f"{num}:{count_dict[num]}次", end=" ")
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 2: 模拟购物车功能</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#2
+products = [['华为P30', 6688], ['wine', 1488], ['Book', 80], ['Shoes', 799], ['MateBook', 5800]]
+
+# 打印商品列表
+for i, product in enumerate(products, start=1):
+    print(f"{i}.{product[0]}:{product[1]}")
+
+cart = []
+while True:
+    input_num = input()
+    try:
+        num = int(input_num)
+        if 1 <= num <= 5:
+            if num - 1 in cart:
+                print("已添加到购物车")
+            else:
+                cart.append(num - 1)
+                print("添加成功")
+        else:
+            print("商品不存在")
+    except ValueError:
+        break
+
+# 输出购物车信息
+for index in cart:
+    print(f"{products[index][0]}:{products[index][1]}")
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 3: 字母转换为电话按键数字</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#3
+# 定义字母到数字的映射关系
+letter_to_number = {
+    'a': '2', 'b': '2', 'c': '2',
+    'd': '3', 'e': '3', 'f': '3',
+    'g': '4', 'h': '4', 'i': '4',
+    'j': '5', 'k': '5', 'l': '5',
+    'm': '6', 'n': '6', 'o': '6',
+    'p': '7', 'q': '7', 'r': '7', 's': '7',
+    't': '8', 'u': '8', 'v': '8',
+    'w': '9', 'x': '9', 'y': '9', 'z': '9'
+}
+
+# 输入英文字符串
+input_str = input()
+
+# 转换为数字字符串
+result = ''.join([letter_to_number[char] for char in input_str if char.isalpha()])
+
+# 输出结果
+print(result)
+</code></pre>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-600">题目 4: 统计《水浒传》人物出现次数</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">
+#4
+# 指定的名字列表
+names = ['宋江', '卢俊义', '吴用', '公孙胜', '关胜', '林冲', '秦明', '呼延灼', '花荣', '柴进', 
+         '李应', '朱仝', '鲁智深', '武松', '董平', '张清', '杨志', '徐宁', '索超', '戴宗']
+
+# 读取文件内容
+wj = 'shuihuzhuan.txt'  # 文件名
+txt = open(wj, "r", encoding='utf-8').read()
+
+# 初始化一个字典来存储人物名称的出现次数
+name_count = {name: 0 for name in names}
+
+# 统计每个人物的出现次数
+for name in names:
+    name_count[name] = txt.count(name)
+
+# 按照出现次数进行升序排序
+sorted_names = sorted(name_count.items(), key=lambda x: x[1])
+
+# 输出结果
+for name, count in sorted_names:
+    print(f"{name} 出现次数：{count}")
+</code></pre>
+                
+
+        </div>
+    </section>
   </main>
 
-  <!-- 页码栏导航 -->
   <nav class="flex justify-center flex-wrap gap-2 mb-12">
       <a href="index.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验一</a>
       <a href="2.1.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验二第一部分</a>
@@ -51,7 +197,9 @@
       <a href="5.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验五</a>
       <a href="6.html" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">实验六</a>
       <a href="7.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验七</a>
+      <a href="8.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验八</a>
       <a href="9.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验九</a>
+      <a href="10.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十</a>
       <a href="11.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十一</a>
       <a href="12.html" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100">实验十二</a>
     </nav>
