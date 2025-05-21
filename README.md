@@ -49,6 +49,3 @@
 [点此进入](https://unlimitedcombor.github.io/python-homework/)
 
 ---
-
-> 📝 建议：如果你想做一个“全网最强课程笔记站”，欢迎在此基础上继续开发其它实验内容！
-
