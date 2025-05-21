@@ -1,8 +1,5 @@
 # 🎓 python-lab-helper - 实验参考答案展示页
 
-[![Star](https://img.shields.io/github/stars/your-repo.svg?style=flat-square)](https://github.com/your-repo)
-[![License](https://img.shields.io/github/license/your-repo.svg?style=flat-square)](LICENSE)
-
 ## 📚 项目介绍
 
 这是一个轻松愉快的小项目，专为非计算机专业的同学准备。通过简单直观的网页界面，我们把 Python 实验一的参考答案做成了一个“能看能抄还能学”的网页！
@@ -47,5 +44,3 @@
 ### 🚀 上手指南
 
 [点此进入](https://unlimitedcombor.github.io/python-homework/)
-
----
